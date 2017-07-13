@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 import zlib
 
 API_KEY = os.environ['TIMBER_API_KEY']
-URL = os.environ['TIMBER_URL'] || 'https://logs.timber.io/frames'
+URL = os.getenv('TIMBER_URL', 'https://logs.timber.io/frames')
 HEADERS_PROTOTYPE = {
     'content-type': 'text/plain',
     'user-agent': 'Timber Cloudwatch Lambda Function/1.0.0 (python)'
@@ -46,8 +46,8 @@ def transform_to_log_line(log_event):
     for consumption by the Timber API.
     """
     timestamp = log_event['timestamp']
-    dt = datetime.fromtimestamp(timestamp / 1000.0)
-    datetime_iso8601 = dt.isoformat()
+    dt = datetime.utcfromtimestamp(timestamp / 1000.0)
+    datetime_iso8601 = dt.isoformat() + 'Z'
     message = log_event['message']
     line = datetime_iso8601 + ": " + message
     return line
@@ -56,12 +56,13 @@ def deliver(log_lines):
     """
     Delivers the list of string log lines to the Timber API.
     """
-    body = '\n'.join([log_line for log_line in log_lines]).encode()
+    body_str = ''.join([log_line for log_line in log_lines])
+    body_bytes = body_str.encode()
     authorization_token = base64.b64encode(API_KEY.encode()).decode()
     headers = HEADERS_PROTOTYPE.copy()
     headers['authorization'] = 'Basic ' + authorization_token
-    headers['content-length'] = len(body)
-    request = Request(URL, data=body, headers=headers)
+    headers['content-length'] = len(body_bytes)
+    request = Request(URL, data=body_bytes, headers=headers)
     code = urlopen(request).getcode()
     log('Received status ' + str(code))
 
