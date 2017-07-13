@@ -1,0 +1,13 @@
+machine:
+  python:
+    version: 3.5.1
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - VERSION=`cat VERSION`
+      - mkdir build
+      - zip -r build/timber-cloudwatch-logs-lambda-function-$VERSION.zip .
+      - aws s3 cp build/timber-cloudwatch-logs-lambda-function-$VERSION.zip s3://packages.timber.io/timber-cloudwatch-logs-lambda-function-$VERSION.zip
+      - aws s3 cp build/timber-cloudwatch-logs-lambda-function-$VERSION.zip s3://packages.timber.io/timber-cloudwatch-logs-lambda-function-latest.zip
