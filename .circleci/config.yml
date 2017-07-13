@@ -25,14 +25,10 @@ jobs:
           command: sudo apt-get install awscli
 
       - run:
-          name: Create .zip file
+          name: Upload to S3
           command: |
             VERSION=`cat VERSION`
             mkdir build
             zip -r build/timber-cloudwatch-logs-lambda-function-$VERSION.zip .
-
-      - run:
-          name: Upload to S3
-          command: |
             aws s3 cp build/timber-cloudwatch-logs-lambda-function-$VERSION.zip s3://packages.timber.io/timber-cloudwatch-logs-lambda-function-$VERSION.zip
             aws s3 cp build/timber-cloudwatch-logs-lambda-function-$VERSION.zip s3://packages.timber.io/timber-cloudwatch-logs-lambda-function-latest.zip
