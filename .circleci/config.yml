@@ -21,6 +21,11 @@ jobs:
       - checkout
 
       - run:
+          name: Install dependencies
+          command: |
+            apt-get install awscli
+
+      - run:
           name: Create .zip file
           command: |
             VERSION=`cat VERSION`
