@@ -9,3 +9,9 @@ to achieve log delivery.
 Please consult the [Timber.io CloudWatch installation docs](https://timber.io/docs/platforms/aws-cloudwatch-logs/installation) for instructions.
 You can also get account specific instructions immediately after creating an app within the
 [Timber console](https://app.timber.io).
+
+## Integrations
+
+Timber will recognize popular events and formats, parsing them automatically to structure your logs.
+For example, AWS lambda report events that log memory usage and execution timings. Timber will
+automatically parse these messages giving you structured data to search and graph.
