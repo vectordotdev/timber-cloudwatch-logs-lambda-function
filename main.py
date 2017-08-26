@@ -35,7 +35,6 @@ def decode_event_data(event):
     """
     base64_gzipped_data = str(event['awslogs']['data'])
     gzipped_data = binascii.a2b_base64(base64_gzipped_data)
-    #gzipped_data = base64.b64decode(base64_gzipped_data).decode()
     json_data = zlib.decompress(gzipped_data, 15+32)
     data = json.loads(json_data)
     return data
@@ -56,7 +55,7 @@ def deliver(log_lines):
     """
     Delivers the list of string log lines to the Timber API.
     """
-    body_str = ''.join([log_line for log_line in log_lines])
+    body_str = '\n'.join([log_line for log_line in log_lines])
     body_bytes = body_str.encode()
     authorization_token = base64.b64encode(API_KEY.encode()).decode()
     headers = HEADERS_PROTOTYPE.copy()
