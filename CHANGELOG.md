@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Changed
+
+  - Updated the AWS SAM template to accept the `TIMBER_API_KEY` environment variable.
+
 ## [1.0.1] - 2017-08-26
 
 ### Fixed
