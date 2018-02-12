@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Serverless application that forwards AWS CloudWatch logs to the Timber.io logging service.
+Parameters:
+  TimberAPIKey:
+    Type: String
+    Description: Your Timber.io API key. If you don't have a key, you can easily create one at https://app.timber.io.
+Resources:
+  TimberLoggingFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Description: Forwards AWS CloudWatch logs to the Timber.io logging service.
+      Handler: main.lambda_handler
+      Runtime: python3.6
+      CodeUri: 's3://packages.timber.io/cloudwatch-logs-lambda-function/timber-cloudwatch-logs-lambda-function-latest.zip'
+      MemorySize: 512
+      Timeout: 30
+      Environment:
+        Variables:
+          TIMBER_API_KEY:
+            Ref: TimberAPIKey
+Outputs:
+  TimberLoggingFunction:
+    Description: Timber Logging Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - TimberLoggingFunction
+      - Arn
