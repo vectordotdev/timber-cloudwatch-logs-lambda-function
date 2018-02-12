@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [1.0.2] - 2018-01-12
+
 ### Changed
 
   - Updated the AWS SAM template to accept the `TIMBER_API_KEY` environment variable.
@@ -22,5 +24,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial release
 
 
-[Unreleased]: https://github.com/timberio/timber-cloudwatch-logs-lambda-function/compare/v1.0.1...HEAD
-[1.0.1]: https://github.com/timberio/odin/compare/v1.00...v1.0.1
+[Unreleased]: https://github.com/timberio/timber-cloudwatch-logs-lambda-function/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/timberio/odin/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/timberio/odin/compare/v1.0.0...v1.0.1
