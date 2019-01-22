@@ -1,7 +1,6 @@
 import base64
 from datetime import datetime
 import gzip
-from io import StringIO
 import json
 import os
 from urllib.request import Request, urlopen
