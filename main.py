@@ -6,11 +6,14 @@ import os
 from urllib.request import Request, urlopen
 import zlib
 
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'VERSION')) as version_file:
+    version = version_file.read().strip()
+
 API_KEY = os.environ['TIMBER_API_KEY']
 URL = os.getenv('TIMBER_URL', 'https://logs.timber.io/frames')
 HEADERS_PROTOTYPE = {
-    'content-type': 'text/plain',
-    'user-agent': 'Timber Cloudwatch Lambda Function/1.0.0 (python)'
+    'Content-Type': 'text/plain',
+    'User-Agent': f'Timber Cloudwatch Lambda Function/{version} (python)'
 }
 
 def lambda_handler(event, _context):
