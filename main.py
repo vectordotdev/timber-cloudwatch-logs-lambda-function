@@ -3,7 +3,8 @@ from datetime import datetime
 import gzip
 import json
 import os
-from urllib.request import Request, urlopen
+import urllib
+from urllib.request import Request
 import zlib
 
 with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'VERSION')) as version_file:
@@ -15,6 +16,12 @@ HEADERS_PROTOTYPE = {
     'Content-Type': 'text/plain',
     'User-Agent': f'Timber Cloudwatch Lambda Function/{version} (python)'
 }
+DEBUG = os.getenv('TIMBER_DEBUG', '')
+
+urlhandler = urllib.request.HTTPSHandler()
+if DEBUG:
+    urlhandler.set_http_debuglevel(9)
+urlopener = urllib.request.build_opener(urlhandler)
 
 def lambda_handler(event, _context):
     """
@@ -50,8 +57,11 @@ def transform_to_log_line(log_event):
     timestamp = log_event['timestamp']
     dt = datetime.utcfromtimestamp(timestamp / 1000.0)
     datetime_iso8601 = dt.isoformat() + 'Z'
+
     message = log_event['message']
+
     line = datetime_iso8601 + ": " + message
+
     return line
 
 def deliver(log_lines):
@@ -60,12 +70,17 @@ def deliver(log_lines):
     """
     body_str = '\n'.join([log_line for log_line in log_lines])
     body_bytes = body_str.encode()
+
     authorization_token = base64.b64encode(API_KEY.encode()).decode()
+
     headers = HEADERS_PROTOTYPE.copy()
-    headers['authorization'] = 'Basic ' + authorization_token
-    headers['content-length'] = len(body_bytes)
+    headers['Authorization'] = 'Basic ' + authorization_token
+    headers['Content-Length'] = len(body_bytes)
+
     request = Request(URL, data=body_bytes, headers=headers)
-    code = urlopen(request).getcode()
+
+    code = urlopener.open(request).read()
+
     log('Received status ' + str(code))
 
 def log(message):
