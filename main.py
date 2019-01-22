@@ -1,5 +1,4 @@
 import base64
-import binascii
 from datetime import datetime
 import gzip
 from io import StringIO
@@ -34,9 +33,11 @@ def decode_event_data(event):
     representing the JSON structure.
     """
     base64_gzipped_data = str(event['awslogs']['data'])
-    gzipped_data = binascii.a2b_base64(base64_gzipped_data)
+    gzipped_data = base64.b64decode(base64_gzipped_data)
     json_data = zlib.decompress(gzipped_data, 15+32)
+
     data = json.loads(json_data)
+
     return data
 
 def transform_to_log_line(log_event):
