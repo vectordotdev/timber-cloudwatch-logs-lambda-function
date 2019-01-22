@@ -11,7 +11,7 @@ Metadata:
     ReadmeUrl: '../README.md'
     Labels: ['logging']
     HomePageUrl: https://github.com/timberio/timber-cloudwatch-logs-lambda-function
-    SemanticVersion: 1.0.2
+    SemanticVersion: VERSION
     SourceCodeUrl: https://github.com/timberio/timber-cloudwatch-logs-lambda-function
 Parameters:
   TimberAPIKey:

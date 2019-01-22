@@ -15,3 +15,7 @@ You can also get account specific instructions immediately after creating an app
 Timber will recognize popular events and formats, parsing them automatically to structure your logs.
 For example, AWS lambda report events that log memory usage and execution timings. Timber will
 automatically parse these messages giving you structured data to search and graph.
+
+## Releasing
+
+* Create a git tag with the version prefixed with `v`
