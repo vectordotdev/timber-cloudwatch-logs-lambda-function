@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  release:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
@@ -22,13 +22,32 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: sudo apt-get install awscli
+          command: sudo apt-get install awscli aws-sam-cli
+
+      - run:
+          name: Write out version
+          command: |
+             sed -i -e s/VERSION/$CIRCLE_TAG/ aws/sam.yml
+             echo "$CIRCLE_TAG" > VERSION
 
       - run:
           name: Upload to S3
           command: |
-            VERSION=`cat VERSION`
             mkdir build
-            zip -r build/timber-cloudwatch-logs-lambda-function-$VERSION.zip .
-            aws s3 cp build/timber-cloudwatch-logs-lambda-function-$VERSION.zip s3://packages.timber.io/cloudwatch-logs-lambda-function/timber-cloudwatch-logs-lambda-function-$VERSION.zip
-            aws s3 cp build/timber-cloudwatch-logs-lambda-function-$VERSION.zip s3://packages.timber.io/cloudwatch-logs-lambda-function/timber-cloudwatch-logs-lambda-function-latest.zip
+            zip -r build/timber-cloudwatch-logs-lambda-function-$CIRCLE_TAG.zip .
+            aws s3 cp build/timber-cloudwatch-logs-lambda-function-$CIRCLE_TAG.zip s3://packages.timber.io/cloudwatch-logs-lambda-function/timber-cloudwatch-logs-lambda-function-$CIRCLE_TAG.zip
+            aws s3 cp build/timber-cloudwatch-logs-lambda-function-$CIRCLE_TAG.zip s3://packages.timber.io/cloudwatch-logs-lambda-function/timber-cloudwatch-logs-lambda-function-latest.zip
+
+      - run:
+          name: Upload to AWS Serverless Repository
+          command: |
+            sam package --template-file aws/sam.yml --output-template-file aws/packaged.yml --s3-bucket packages.timber.io --s3-prefix cloudwatch-logs-lambda-function/timber-logging
+            sam publish --template aws/packaged.yml --region us-east-1
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - release:
+         tags:
+           only: /^v.*/

@@ -7,8 +7,12 @@ import urllib
 from urllib.request import Request
 import zlib
 
-with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'VERSION')) as version_file:
-    version = version_file.read().strip()
+version = 'unknown'
+
+version_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'VERSION')
+if os.path.exists(version_file):
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'VERSION')) as version_file:
+        version = version_file.read().strip()
 
 API_KEY = os.environ['TIMBER_API_KEY']
 URL = os.getenv('TIMBER_URL', 'https://logs.timber.io/frames')
