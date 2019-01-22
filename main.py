@@ -70,3 +70,45 @@ def deliver(log_lines):
 
 def log(message):
     print(message)
+
+# useful for testing locally
+if __name__ == "__main__":
+    import fileinput
+    import time
+
+    context = []
+    for i, line in enumerate(fileinput.input()):
+        event = []
+
+        log_message = {
+            'messageType': 'DATA_MESSAGE',
+            'owner': '123456789123',
+            'logGroup': 'testLogGroup',
+            'logStream': 'testLogStream',
+            'subscriptionFilters': [
+                'testFilter'
+            ],
+            'logEvents': [
+                {
+                    'id': f'eventId{i}',
+                    'timestamp': int(time.time() * 1000),
+                    'message': line,
+                },
+            ]
+        }
+
+        log_data = base64.b64encode(
+            zlib.compress(
+                str.encode(
+                    json.dumps(log_message)
+                )
+            )
+        )
+
+        event = {
+            "awslogs": {
+                "data": log_data.decode()
+            }
+        }
+
+        lambda_handler(event, context)
