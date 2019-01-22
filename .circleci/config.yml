@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Upload to AWS Serverless Repository
           command: |
-            sam package --template-file aws/sam.yml --output-template-file aws/packaged.yml --s3-bucket packages.timber.io --s3-prefix cloudwatch-logs-lambda-function/timber-logging
+            sam package --template-file aws/sam.yml --output-template-file aws/packaged.yml --s3-bucket packages.timber.io --s3-prefix cloudwatch-logs-lambda-function/timber-logging/$CIRCLE_TAG
             sam publish --template aws/packaged.yml --region us-east-1
 
 workflows:
