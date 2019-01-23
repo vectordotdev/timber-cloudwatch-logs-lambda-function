@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [1.0.3] - 2019-01-23
+
+### Changed
+
+  - No functional changes. Documentation and CI was updated.
+
 ## [1.0.2] - 2018-01-12
 
 ### Changed
@@ -24,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial release
 
 
-[Unreleased]: https://github.com/timberio/timber-cloudwatch-logs-lambda-function/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/timberio/timber-cloudwatch-logs-lambda-function/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/timberio/odin/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/timberio/odin/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/timberio/odin/compare/v1.0.0...v1.0.1

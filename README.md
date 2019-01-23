@@ -18,4 +18,5 @@ automatically parse these messages giving you structured data to search and grap
 
 ## Releasing
 
+* Update CHANGELOG.md
 * Create a git tag with the version prefixed with `v`
