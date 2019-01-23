@@ -1,6 +1,5 @@
 import base64
 from datetime import datetime
-import gzip
 import json
 import os
 import urllib
@@ -27,6 +26,7 @@ if DEBUG:
     urlhandler.set_http_debuglevel(9)
 urlopener = urllib.request.build_opener(urlhandler)
 
+
 def lambda_handler(event, _context):
     """
     Main entry point for the lambda handler.
@@ -40,6 +40,7 @@ def lambda_handler(event, _context):
 
     deliver(log_lines)
 
+
 def decode_event_data(event):
     """
     Decodes the raw Cloudwatch lambda payload into a dictionary
@@ -52,6 +53,7 @@ def decode_event_data(event):
     data = json.loads(json_data)
 
     return data
+
 
 def transform_to_log_line(log_event):
     """
@@ -67,6 +69,7 @@ def transform_to_log_line(log_event):
     line = datetime_iso8601 + ": " + message
 
     return line
+
 
 def deliver(log_lines):
     """
@@ -87,8 +90,10 @@ def deliver(log_lines):
 
     log('Received status ' + str(code))
 
+
 def log(message):
     print(message)
+
 
 # useful for testing locally
 if __name__ == "__main__":
