@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Write out version
           command: |
-             sed -i -e s/VERSION/$CIRCLE_TAG/ aws/sam.yml
+             sed -i -e s/VERSION/${CIRCLE_TAG//v}/ aws/sam.yml
              echo "$CIRCLE_TAG" > VERSION
 
       - run:
