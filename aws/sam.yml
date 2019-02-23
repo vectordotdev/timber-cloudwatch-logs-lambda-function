@@ -17,6 +17,9 @@ Parameters:
   TimberAPIKey:
     Type: String
     Description: Your Timber.io API key. If you don't have a key, you can easily create one at https://app.timber.io.
+  TimberSourceID:
+    Type: String
+    Description: Your Timber.io source ID key. This is displayed on your source's installation page.
 Resources:
   TimberLoggingFunction:
     Type: 'AWS::Serverless::Function'
@@ -29,6 +32,8 @@ Resources:
       Timeout: 30
       Environment:
         Variables:
+          TIMBER_SOURCE_ID:
+            Ref: TimberSourceID
           TIMBER_API_KEY:
             Ref: TimberAPIKey
 Outputs:
