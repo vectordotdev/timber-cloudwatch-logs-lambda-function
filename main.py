@@ -14,7 +14,8 @@ if os.path.exists(version_file):
         version = version_file.read().strip()
 
 API_KEY = os.environ['TIMBER_API_KEY']
-URL = os.getenv('TIMBER_URL', 'https://logs.timber.io/frames')
+SOURCE_ID = os.environ['TIMBER_SOURCE_ID']
+HOST = os.getenv('TIMBER_HOST', 'https://logs.timber.io')
 HEADERS_PROTOTYPE = {
     'Content-Type': 'text/plain',
     'User-Agent': f'Timber Cloudwatch Lambda Function/{version} (python)'
@@ -81,10 +82,11 @@ def deliver(log_lines):
     authorization_token = base64.b64encode(API_KEY.encode()).decode()
 
     headers = HEADERS_PROTOTYPE.copy()
-    headers['Authorization'] = 'Basic ' + authorization_token
+    headers['Authorization'] = 'Bearer ' + authorization_token
     headers['Content-Length'] = len(body_bytes)
 
-    request = Request(URL, data=body_bytes, headers=headers)
+    url = str(HOST) + '/sources/' + str(SOURCE_ID)
+    request = Request(url, data=body_bytes, headers=headers)
 
     code = urlopener.open(request).read()
 
