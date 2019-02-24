@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Changed
+
+  - Updated the logs endpoint from `/sources/:source_id` to `/sources/:source_id/frames`
+
 ## [2.0.0] - 2019-02-23
 
 ### Changed

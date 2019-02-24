@@ -85,7 +85,7 @@ def deliver(log_lines):
     headers['Authorization'] = 'Bearer ' + authorization_token
     headers['Content-Length'] = len(body_bytes)
 
-    url = str(HOST) + '/sources/' + str(SOURCE_ID)
+    url = str(HOST) + '/sources/' + str(SOURCE_ID) + '/frames'
     request = Request(url, data=body_bytes, headers=headers)
 
     code = urlopener.open(request).read()
