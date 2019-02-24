@@ -6,4 +6,10 @@ to achieve log delivery.
 
 ## Setup & Installation
 
+### AWS Console
+
 Please consult the [Timber.io CloudWatch installation docs](https://timber.io/setup/integrations/aws-cloudwatch) for instructions.
+
+### Terraform
+
+Please see the [`/terraform` directory](/terraform).

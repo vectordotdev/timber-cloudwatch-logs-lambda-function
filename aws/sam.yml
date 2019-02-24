@@ -29,7 +29,7 @@ Resources:
       Runtime: python3.6
       CodeUri: '../'
       MemorySize: 512
-      Timeout: 30
+      Timeout: 31
       Environment:
         Variables:
           TIMBER_SOURCE_ID:
