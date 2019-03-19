@@ -76,13 +76,11 @@ def deliver(log_lines):
     """
     Delivers the list of string log lines to the Timber API.
     """
-    body_str = '\n'.join([log_line for log_line in log_lines])
+    body_str = '\n'.join([log_line for log_line in log_lines if log_line != ''])
     body_bytes = body_str.encode()
 
-    authorization_token = base64.b64encode(API_KEY.encode()).decode()
-
     headers = HEADERS_PROTOTYPE.copy()
-    headers['Authorization'] = 'Bearer ' + authorization_token
+    headers['Authorization'] = 'Bearer ' + API_KEY
     headers['Content-Length'] = len(body_bytes)
 
     url = str(HOST) + '/sources/' + str(SOURCE_ID) + '/frames'

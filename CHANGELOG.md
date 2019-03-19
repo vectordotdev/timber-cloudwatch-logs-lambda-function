@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
   - Added terraform module under `/terraform`
+  - Do not encode API key since it is no longer required
 
 ## [2.0.2] - 2019-02-24
 
