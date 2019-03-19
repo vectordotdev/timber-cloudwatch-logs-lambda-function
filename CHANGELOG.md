@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [2.0.4] - 2019-03-19
+
+### Fixed
+
+  - Don't prefix lines with our own timestamp, instead include it in the `dt` attribute.
+    This ensures the client provided timestamps are honored.
+
 ## [2.0.3] - 2019-03-19
 
 ### Added
