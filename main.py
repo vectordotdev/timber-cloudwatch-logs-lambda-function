@@ -17,7 +17,7 @@ API_KEY = os.environ['TIMBER_API_KEY']
 SOURCE_ID = os.environ['TIMBER_SOURCE_ID']
 HOST = os.getenv('TIMBER_HOST', 'https://logs.timber.io')
 HEADERS_PROTOTYPE = {
-    'Content-Type': 'text/plain',
+    'Content-Type': 'application/ndjson',
     'User-Agent': f'Timber Cloudwatch Lambda Function/{version} (python)'
 }
 DEBUG = os.getenv('TIMBER_DEBUG', '')
@@ -64,12 +64,10 @@ def transform_to_log_line(log_event):
     timestamp = log_event['timestamp']
     dt = datetime.utcfromtimestamp(timestamp / 1000.0)
     datetime_iso8601 = dt.isoformat() + 'Z'
-
     message = log_event['message']
-
-    line = datetime_iso8601 + ": " + message
-
-    return line
+    log_line = {'dt': datetime_iso8601, 'message': message}
+    json_log_line = json.dumps(log_line)
+    return json_log_line
 
 
 def deliver(log_lines):
