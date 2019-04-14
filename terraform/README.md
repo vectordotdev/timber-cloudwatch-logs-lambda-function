@@ -7,6 +7,7 @@ This folder serves as a Terraform module that you can reference to easily setup 
 ```
 module "timber_log_forwarding" {
   source = "git::git@github.com:timberio/timber-cloudwatch-logs-lambda-function.git//terraform"
+  name   = "hello_world"
 
   log_group_names = [
     "aws/lambda/hello_world"
@@ -14,7 +15,7 @@ module "timber_log_forwarding" {
 
   # Obtain both of these at https://app.timber.io
   api_key = "YOUR_API_KEY"
-  source_id = "YOUR_SPURCE_ID"
+  source_id = "YOUR_SOURCE_ID"
 }
 ```
 
