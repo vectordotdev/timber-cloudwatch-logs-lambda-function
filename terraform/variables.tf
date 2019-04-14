@@ -23,6 +23,14 @@ List of CloudWatch log group names to forward to Timber. Timber will create a su
 EOF
 }
 
+variable "name" {
+  type = "string"
+
+  description = <<EOF
+Unique name prefix for the Timber lambda and IAM role created by this module.
+EOF
+}
+
 variable "source_id" {
   type = "string"
 
